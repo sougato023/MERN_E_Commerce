@@ -19,7 +19,7 @@ exports.signup = (req, res) => {
         user.hashed_password = undefined;
         
         res.json({data})
-    })
+    });
     //res.json(user);
 };
 
@@ -79,7 +79,7 @@ exports.isAuth = (req, res, next) => {
 exports.isAdmin = (req, res, next) => {
    // let user = req.profile.role===0;
     if(req.profile.role===0){
-        res.status(403).json({
+        return res.status(403).json({
             error: "Admin resource! Access denied"
         });
     }
