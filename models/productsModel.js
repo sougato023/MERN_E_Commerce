@@ -27,9 +27,12 @@ const productsSchema = new mongoose.Schema({
         required: true
     },
     quantity: {
+        type: Number
+       
+    },
+    sold:{
         type: Number,
-        trim: true,
-        required: true
+        dafault: 0
     },
     photo:{
         data: Buffer,

@@ -37,7 +37,7 @@ exports.signin = (req, res) => {
         //create a authenticate module in user module
         if(!data.authenticate(password)){
             return res.status(400).json({
-                error: "Email and password doesnot match"
+                error: "Email and password does not match"
             });
         }
 
@@ -67,6 +67,7 @@ exports.requireSignin = expressJwt({
 });
 
 exports.isAuth = (req, res, next) => {
+    console.log(`Request Auth: ${JSON.stringify(req.auth)}`);
     let user = req.profile && req.auth && (req.profile._id == req.auth._id);
     if(!user){
         res.status(403).json({
