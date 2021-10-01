@@ -29,7 +29,7 @@ exports.signin = (req, res) => {
     User.findOne({email}, (err,data) => {
         if(err || !data){
             return res.status(400).json({
-                err:"User does not exist. Please sign-up"
+                error:"User does not exist. Please sign-up"
             });
         }
 

@@ -2,13 +2,16 @@ import React, {useState} from "react";
 import Layout from "../core/Layout";
 import { Redirect} from "react-router-dom";
 
-import { signin } from "../auth/index";
+import { signin, authenticate, isAuthenticated } from "../auth/index";
+
+
 
 const Signin = () => {
+    const {user} = isAuthenticated();
     
     const [values, setValues] = useState({
-        email:"",
-        password:"",
+        email:"sougato023@gmail.com",
+        password:"abcd1234",
         error:"",
         loading:false,
         redirectToReferrer:false
@@ -31,11 +34,15 @@ const Signin = () => {
             if(data.error){
                 setValues({...values, error: data.error, loading: false})
             }else{
-                setValues({
-                    ...values,
-                    
-                    redirectToReferrer: true
-                })
+
+                authenticate(data, () => {
+                    setValues({
+                        ...values,
+                        
+                        redirectToReferrer: true
+                    });
+                });
+                
             }
         });
 
@@ -84,8 +91,23 @@ const Signin = () => {
 
     const redirectUser = () => {
         if(redirectToReferrer){
+            console.log(user);
+            if(user && user.role === 1){
+                return <Redirect to="/admin/dashboard" />
+            }else{
             return(
-                <Redirect to="/"></Redirect>
+                <Redirect to="/user/dashboard" />
+
+            )
+            }
+
+            
+        }
+
+        if(isAuthenticated()){
+            return(
+                <Redirect to="/" />
+
             )
         }
     }
